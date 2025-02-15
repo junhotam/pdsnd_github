@@ -54,9 +54,6 @@ This project computes various descriptive statistics to analyze bike-sharing tre
 The project consists of the following files:
 
 - ``: The main Python script for analyzing the data
-- ``: Dataset for Chicago
-- ``: Dataset for New York City
-- ``: Dataset for Washington, DC
 
 ## Getting Started
 
@@ -77,7 +74,5 @@ To run this project, you need:
    ```
 4. Follow the on-screen prompts to select a city and view insights.
 
-## Acknowledgments
 
-The data used in this project is provided by [Motivate](https://www.motivateco.com/).
 
