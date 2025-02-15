@@ -53,7 +53,7 @@ This project computes various descriptive statistics to analyze bike-sharing tre
 
 The project consists of the following files:
 
-- ``: The main Python script for analyzing the data
+- `bikeshare_2.py`: The main Python script for analyzing the data
 
 ## Getting Started
 

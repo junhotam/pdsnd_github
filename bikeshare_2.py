@@ -2,6 +2,7 @@ import time
 import pandas as pd
 import numpy as np
 
+# setting up basic information
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york': 'new_york_city.csv',
               'washington': 'washington.csv' }
@@ -20,6 +21,7 @@ number_to_day = {
     7: "Saturday"
 }
 
+# creating the functions
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
