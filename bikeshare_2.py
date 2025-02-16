@@ -27,63 +27,60 @@ def get_filters():
     Asks user to specify a city, month, and day to analyze.
 
     Returns:
-        (str) city - name of the city to analyze
-        (str) month - name of the month to filter by, or "all" to apply no month filter
-        (str) day - name of the day of week to filter by, or "all" to apply no day filter
+        city (str): Name of the city to analyze.
+        month (str | int): Name of the month or 9 for no month filter.
+        day (int): Number representing the day of the week (1=Sunday, 7=Saturday), or 0 for no filter.
     """
-    print('Hello! Let\'s explore some US bikeshare data!')
-    # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
-    
-    print('Would you like to look at Chicago, New York, or Washington data?')
-    city = ''
+    print("Hello! Let's explore some US bikeshare data!")
 
-    while city not in CITY_DATA.keys():
-        city = input('Please select one from the list: Chicago, New York, Washington\nCity: ').strip().lower()
-        if city not in CITY_DATA.keys():
-            print('Sorry, that city is not recognized or is unavailable.')
+    # Dictionary of available cities
 
+    def get_valid_input(prompt, valid_options=None, convert_func=None):
+        """Handles user input validation."""
+        while True:
+            user_input = input(prompt).strip().lower()
+            if valid_options and user_input in valid_options:
+                return user_input
+            elif convert_func:
+                try:
+                    return convert_func(user_input)
+                except ValueError:
+                    pass
+            print("Invalid input. Please try again.")
+
+    # Get city selection
+    city = get_valid_input(
+        "Would you like to look at data for Chicago, New York, or Washington? ",
+        valid_options=CITY_DATA.keys()
+    )
     print(f"\nSounds good! We will be looking at data for {city.title()}.")
 
-    # get user input for month (all, january, february, ... , june)
-    print('\nWould you like to filter for a specific time period? You can filter by:\n- "month"\n- "day"\n- "both"\n- "none"')
-    
-    time_answer = '' 
+    # Get time filter option
+    time_answer = get_valid_input(
+        '\nWould you like to filter for a specific time period? Choose one: "month", "day", "both", or "none": ',
+        valid_options=time_answers
+    )
 
-    while time_answer not in time_answers:
-        time_answer = input('Please select one of the options above:').strip().lower()
-        if time_answer not in time_answers:
-            print('Sorry, that is not one of the options')
+    # Default values (no filters)
+    month, day = 9, 0
 
-    # setting up placeholder variables
-    day = 0 
-    month = 9
+    # Get month filter
+    if time_answer in {"month", "both"}:
+        month = get_valid_input(
+            '\nWhat month would you like to filter for? (January - June): ',
+            valid_options=months
+        )
 
-    if time_answer == 'month' or time_answer == 'both':
-        print('\nWhat month would like to filter for? Choose one of the following months:\n- "January"\n- "February"\n- "March"\n- "April"\n- "May"\n- "June"')
-        
-        while month not in months:
-            month = input('Please enter in a month:').strip().lower()   
-            if month not in months:
-                print('Please select one of the options')
+    # Get day filter
+    if time_answer in {"day", "both"}:
+        day = get_valid_input(
+            "\nEnter a number between 1 (Sunday) and 7 (Saturday) for the day filter: ",
+            convert_func=lambda x: int(x) if 1 <= int(x) <= 7 else None
+        )
 
-    # get user input for day of week (all, monday, tuesday, ... sunday)
-    if time_answer == 'day' or time_answer == 'both':
-        print('\nWhat day would you like to filter for? Please enter in a number (e.g. 1 = Sunday)')
-
-        while True:
-            day = input("Enter a number between 1 and 7: ")
-
-            try:
-                day = int(day)
-                if 1 <= day <= 7:
-                    break 
-                else:
-                    print("Please enter a number between 1 and 7.")
-            except ValueError:
-                print("Invalid input! Please enter a number.")
-
-    print('-'*40)
+    print("-" * 40)
     return city, month, day
+
 
 # function loads the data per the users filters
 def load_data(city, month = 9, day = 0):
