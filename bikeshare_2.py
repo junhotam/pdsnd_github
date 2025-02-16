@@ -2,6 +2,7 @@ import time
 import pandas as pd
 import numpy as np
 
+# loading necessary information for functions
 CITY_DATA = { 'chicago': 'chicago.csv',
               'new york': 'new_york_city.csv',
               'washington': 'washington.csv' }
@@ -20,6 +21,7 @@ number_to_day = {
     7: "Saturday"
 }
 
+# function grabs the filter conditions for the questions later on
 def get_filters():
     """
     Asks user to specify a city, month, and day to analyze.
@@ -83,7 +85,7 @@ def get_filters():
     print('-'*40)
     return city, month, day
 
-
+# function loads the data per the users filters
 def load_data(city, month = 9, day = 0):
     """
     Loads data for the specified city and filters by month and day if applicable.
@@ -116,7 +118,7 @@ def load_data(city, month = 9, day = 0):
         
     return df
 
-
+# function grabs the time stats
 def time_stats(df, month, day):
     """Displays statistics on the most frequent times of travel."""
 
@@ -140,7 +142,7 @@ def time_stats(df, month, day):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-
+# function grabs the station stats per users filters
 def station_stats(df):
     """Displays statistics on the most popular stations and trip."""
 
@@ -168,7 +170,7 @@ def station_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-
+# function grabs the trip duration metrics
 def trip_duration_stats(df):
     """Displays statistics on the total and average trip duration."""
 
@@ -187,7 +189,7 @@ def trip_duration_stats(df):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
-
+# filters grabs the user stats from the data
 def user_stats(df,city):
     """Displays statistics on bikeshare users."""
 
@@ -216,6 +218,7 @@ def user_stats(df,city):
     print("\nThis took %s seconds." % (time.time() - start_time))
     print('-'*40)
 
+# function prints raw data from users request
 def display_raw_data(df):
     """ displays trip data at the users request """
     i = 0
@@ -232,7 +235,7 @@ def display_raw_data(df):
         else:
             raw = input("\nYour input is invalid. Please enter only 'yes' or 'no'\n").lower().strip()
 
-
+# runs all of the functions
 def main():
     while True:
         city, month, day = get_filters()
