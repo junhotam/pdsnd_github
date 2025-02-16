@@ -217,20 +217,28 @@ def user_stats(df,city):
 
 # function prints raw data from users request
 def display_raw_data(df):
-    """ displays trip data at the users request """
-    i = 0
-    raw = input("Would you like to view individual trip data? Yes or No.").lower().strip()
-    pd.set_option('display.max_columns',200)
+    """Displays trip data 5 rows at a time based on user input."""
+    if df.empty:
+        print("No data available to display.")
+        return
 
-    while True:            
+    pd.set_option('display.max_columns', 200)
+    
+    i = 0
+    while True:
+        raw = input("Would you like to view individual trip data? (yes/no): ").strip().lower()
+        
         if raw == 'no':
             break
         elif raw == 'yes':
-            print(df[i:i+5]) 
-            raw = input("Would you like to see five more rows? Yes or No: ").lower().strip()
+            print(df.iloc[i:i+5])  # More explicit slicing
             i += 5
+            if i >= len(df):
+                print("\nNo more data to display.")
+                break
         else:
-            raw = input("\nYour input is invalid. Please enter only 'yes' or 'no'\n").lower().strip()
+            print("Invalid input. Please enter 'yes' or 'no'.")
+
 
 # runs all of the functions
 def main():
